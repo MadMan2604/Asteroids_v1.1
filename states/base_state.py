@@ -1,4 +1,4 @@
-# base state script
+# Base state script
 class BaseState:
     def __init__(self, game):
         self.game = game 

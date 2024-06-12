@@ -7,10 +7,9 @@ from states.title_screen_state import TitleScreen
 from states.options_screen_state import OptionsScreen
 from states.instructions_screen_state import InstructionsScreen
 from states.game_over_state import GameOver
-#from states.loading_screen_state import LoadingScreen
 from scripts.settings import * 
 
-# the class that constructs the game itself
+# The class that constructs the game itself
 class Game:
     def __init__(self, screen):
         self.screen = screen  
@@ -20,7 +19,6 @@ class Game:
 
         # Initialise and add game states
         self.state_manager.add_state("title_screen", TitleScreen(self))
-        #self.state_manager.add_state("loading_screen", LoadingScreen(self))
         self.state_manager.add_state("game", InGame(self))
         self.state_manager.add_state("options_screen", OptionsScreen(self))
         self.state_manager.add_state("information_screen", InstructionsScreen(self))
@@ -42,10 +40,9 @@ class Game:
                     self.running = False 
             
             self.state_manager.update(events)
-      
             self.state_manager.draw(self.screen)
 
             pygame.display.flip()
             self.clock.tick(FPS)
         
-        pygame.quit() 
+        pygame.quit()

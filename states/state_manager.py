@@ -5,7 +5,6 @@ class StateManager:
         self.states = {}
         self.current_state = None 
         
-
     def add_state(self, state_name, state):
         # Adds a new state to the state manager.
         self.states[state_name] = state
@@ -33,5 +32,3 @@ class StateManager:
         if self.current_state:
             self.current_state.exit_state()
             self.current_state = None
-
-
