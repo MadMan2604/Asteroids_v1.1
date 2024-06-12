@@ -37,5 +37,5 @@ class GameOver(BaseState):
         self.screen.blit(gameover_text, (300, 100))
         
         """load the buttons for the game"""
-        self.quit_button = self.button.draw_button(self.screen, 700, 700, BUTTON_WIDTH, BUTTON_HEIGHT, "Quit", WHITE, self.font1, BLACK)
-        self.restart_button = self.button.draw_button(self.screen, 700, 500, BUTTON_WIDTH, BUTTON_HEIGHT,"Restart", WHITE, self.font1, BLACK)
+        self.quit_button = self.button.draw_button(self.screen, 600, 700, BUTTON_WIDTH, BUTTON_HEIGHT, "Quit", WHITE, self.font1, BLACK)
+        self.restart_button = self.button.draw_button(self.screen, 600, 500, BUTTON_WIDTH, BUTTON_HEIGHT,"Restart", WHITE, self.font1, BLACK)
