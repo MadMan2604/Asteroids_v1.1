@@ -32,7 +32,7 @@ class GameOver(BaseState):
                 if self.restart_button.collidepoint(event.pos):
                     self.game.state_manager.change_state("game")
         
-        """load the text for the gameover screen"""
+        """load the text for the gameover"""
         gameover_text = self.font.render("GAME OVER", True, WHITE)
         self.screen.blit(gameover_text, (300, 100))
         
