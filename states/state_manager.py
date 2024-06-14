@@ -33,5 +33,10 @@ class StateManager:
         if self.current_state:
             self.current_state.exit_state()
             self.current_state = None
+    
+    def restart_state(self):
+        if self.current_state:
+            state_name = self.current_state.__class__.__name__
+            self.change_state(state_name)
 
 

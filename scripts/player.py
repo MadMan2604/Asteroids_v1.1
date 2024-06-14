@@ -26,6 +26,8 @@ class Player(pygame.sprite.Sprite):
 
         self.wrap_around_screen()
 
+        
+
     def wrap_around_screen(self):
         if self.rect.left < 0:
             self.rect.right = WIDTH

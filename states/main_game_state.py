@@ -10,6 +10,7 @@ from scripts.player import Player
 from scripts.buttons import Button
 from states.game_over_state import GameOver
 from states.base_state import BaseState
+from scripts.bullet import Bullet
 
 # THE MAIN GAME CLASS 
 class InGame(BaseState):
@@ -23,11 +24,13 @@ class InGame(BaseState):
         # Create sprites
         self.all_sprites = pygame.sprite.Group()
         self.asteroids = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
         self.player = Player()
         self.all_sprites.add(self.player)
         self.spawn_rate = 100  # Adjust spawn rate as needed
         self.spawn_counter = 0
         self.paused = False 
+        
 
         # Initialize fonts
         self.font = pygame.font.Font(FONT1, 150)
@@ -36,10 +39,16 @@ class InGame(BaseState):
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
 
-    def check_collisions(self, player, asteroids):
+    def check_collisions(self, player, asteroids, bullets):
         for asteroid in asteroids:
             if player.rect.colliderect(asteroid.rect):
                 self.game.state_manager.change_state("game_over")
+        
+        # Check for bullet-asteroid collisions
+        collisions = pygame.sprite.groupcollide(bullets, asteroids, True, True)
+        for bullet, collided_asteroids in collisions.items():
+            # Here you can handle additional logic like scoring or creating smaller asteroids
+            pass
 
     def update(self, events):
         # Process input/events
@@ -73,12 +82,14 @@ class InGame(BaseState):
             if keys[pygame.K_s]:
                 self.player.decelerate()
             if keys[pygame.K_SPACE]:
-                self.player.shoot()
+                bullet = Bullet(self.player.rect.center, -self.player.angle)
+                self.all_sprites.add(bullet)
+                self.bullets.add(bullet)
 
             # Draw / render
             self.screen.fill(BLACK)
             self.all_sprites.draw(self.screen)
-            self.check_collisions(self.player, self.asteroids)
+            self.check_collisions(self.player, self.asteroids, self.bullets)
 
         else: 
             for event in events:
