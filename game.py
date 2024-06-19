@@ -17,6 +17,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True 
         self.state_manager = StateManager(self)
+        self.is_fullscreen = False 
 
         # Initialise and add game states
         self.state_manager.add_state("title_screen", TitleScreen(self))
@@ -34,6 +35,14 @@ class Game:
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
     
+    def toggle_fullscreen(self):
+        if self.is_fullscreen:
+            self.screen
+            self.is_fullscreen = False
+        else:
+            (self.screen, pygame.FULLSCREEN)
+            self.is_fullscreen = True
+
     def run(self):
         while self.running:
             events = pygame.event.get()

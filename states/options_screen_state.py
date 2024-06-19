@@ -30,6 +30,8 @@ class OptionsScreen(BaseState):
                 if self.back_button.collidepoint(event.pos):
                     print("changed bacl to title screen")
                     self.game.state_manager.change_state("title_screen")
+                if self.fullscreen_button.collidepoint(event.pos):
+                    self.game.toggle_fullscreen()
         
         """clear the screen"""
         self.screen.fill(BLACK)
