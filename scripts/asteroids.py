@@ -17,6 +17,8 @@ class Asteroid(pygame.sprite.Sprite):
             'a5': SPRITES + 'Asteroid_5.png',
             'a6': SPRITES + 'Asteroid_6.png',
             'a7': SPRITES + 'Asteroid_7.png',
+            'a8': SPRITES + 'Asteroid_8.png',
+            'a9': SPRITES + 'Asteroid_9.png'
         }
         # Select a random asteroid image
         self.size = 64
