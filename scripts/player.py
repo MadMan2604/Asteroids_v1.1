@@ -6,7 +6,11 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface((50, 50), pygame.SRCALPHA)
-        pygame.draw.polygon(self.image, WHITE, [(0, 50), (25, 0), (50, 50)])
+        # Calculate points for an equilateral triangle
+        side_length = 50
+        height = side_length * (math.sqrt(3) / 2)
+        half_base = side_length / 2
+        pygame.draw.polygon(self.image, WHITE, [(25, 0), (0, height), (50, height)])
         self.original_image = self.image
         self.rect = self.image.get_rect(center=(WIDTH / 2, HEIGHT / 2))
         self.position = pygame.math.Vector2(WIDTH / 2, HEIGHT / 2)
@@ -25,8 +29,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
         self.wrap_around_screen()
-
-        
 
     def wrap_around_screen(self):
         if self.rect.left < 0:

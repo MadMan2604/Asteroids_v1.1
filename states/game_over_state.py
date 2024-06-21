@@ -5,12 +5,14 @@ from states.base_state import BaseState
 from scripts.settings import *
 from scripts.buttons import Button
 
+
 class GameOver(BaseState):
     def __init__(self, game):
         super().__init__(game)
         self.screen = self.game.screen
         self.clock = pygame.time.Clock()
         self.button = Button()
+        
     
         """initialise the fonts"""
         self.font = pygame.font.Font(FONT1, 150)
@@ -30,7 +32,7 @@ class GameOver(BaseState):
                     pygame.quit()
                     sys.exit()
                 if self.restart_button.collidepoint(event.pos):
-                    self.game.state_manager.change_state("game")
+                    
         
         """load the text for the gameover"""
         gameover_text = self.font.render("GAME OVER", True, WHITE)

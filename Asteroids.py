@@ -2,8 +2,8 @@ import pygame
 
 from game import Game 
 from scripts.settings import *
-
-if __name__ == "__main__":
+                                    
+if __name__ == "__main__":    
     pygame.init()
     pygame.mixer.init()
     screen_size = (WIDTH, HEIGHT)
