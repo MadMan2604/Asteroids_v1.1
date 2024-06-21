@@ -39,6 +39,8 @@ class InGame(BaseState):
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
 
+    
+
     def check_collisions(self, player, asteroids, bullets):
         for asteroid in asteroids:
             if player.rect.colliderect(asteroid.rect):
@@ -97,7 +99,7 @@ class InGame(BaseState):
                     if self.resume_button.collidepoint(event.pos):
                         self.paused = False 
                     if self.restart_button.collidepoint(event.pos):
-                        self.game.state_manager.change_state("game")
+                        self.game.state_manager.restart_state("game")
                     if self.options_button.collidepoint(event.pos):
                         print("Options Screen")
                     if self.quit_button.collidepoint(event.pos):

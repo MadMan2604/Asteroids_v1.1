@@ -32,7 +32,8 @@ class GameOver(BaseState):
                     pygame.quit()
                     sys.exit()
                 if self.restart_button.collidepoint(event.pos):
-                    
+                    self.game.state_manager.restart_state("game")
+                  
         
         """load the text for the gameover"""
         gameover_text = self.font.render("GAME OVER", True, WHITE)

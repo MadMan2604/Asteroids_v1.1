@@ -18,6 +18,7 @@ class Game:
         self.running = True 
         self.state_manager = StateManager(self)
         self.is_fullscreen = False 
+        self.ingame = InGame(self)
 
         # Initialise and add game states
         self.state_manager.add_state("title_screen", TitleScreen(self))
@@ -42,6 +43,10 @@ class Game:
         else:
             (self.screen, pygame.FULLSCREEN)
             self.is_fullscreen = True
+            
+    """def restart_game(self):
+        self.ingame.player.position = pygame.math.Vector2(WIDTH / 2, HEIGHT / 2)
+        self.ingame.asteroids.empty()"""
 
     def run(self):
         while self.running:
