@@ -21,7 +21,7 @@ class Asteroid(pygame.sprite.Sprite):
             'a9': SPRITES + 'Asteroid_9.png'
         }
         # Select a random asteroid image
-        self.size = 64
+        self.size = 65
         image_name = random.choice(list(self.asteroid_images.keys()))
         self.image = pygame.image.load(self.asteroid_images[image_name]).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.size *2, self.size *2))

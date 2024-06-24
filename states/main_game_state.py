@@ -31,6 +31,9 @@ class InGame(BaseState):
         self.spawn_counter = 0
         self.paused = False 
         
+        # Other game logic
+        self.points = 0
+        self.points        
 
         # Initialize fonts
         self.font = pygame.font.Font(FONT1, 150)
@@ -48,9 +51,9 @@ class InGame(BaseState):
         
         # Check for bullet-asteroid collisions
         collisions = pygame.sprite.groupcollide(bullets, asteroids, True, True)
-        for bullet, collided_asteroids in collisions.items():
-            # Here you can handle additional logic like scoring or creating smaller asteroids
-            pass
+        for bullets, asteroids in collisions.items():
+            if collisions:
+                self.points += 1
 
     def update(self, events):
         # Process input/events
@@ -92,6 +95,8 @@ class InGame(BaseState):
             self.screen.fill(BLACK)
             self.all_sprites.draw(self.screen)
             self.check_collisions(self.player, self.asteroids, self.bullets)
+
+        
 
         else: 
             for event in events:
