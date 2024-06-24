@@ -33,7 +33,7 @@ class InGame(BaseState):
         
         # Other game logic
         self.points = 0
-        self.points        
+              
 
         # Initialize fonts
         self.font = pygame.font.Font(FONT1, 150)
