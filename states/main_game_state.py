@@ -33,6 +33,7 @@ class InGame(BaseState):
         
         # Other game logic
         self.points = 0
+        
               
 
         # Initialize fonts
@@ -42,7 +43,13 @@ class InGame(BaseState):
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
 
-    
+    # drawing the points
+    def draw_points_box(self, screen):
+        pygame.draw.rect(screen, WHITE, (30, 630, 100, 100)) # draw the white outline for the pointmetre
+        pygame.draw.rect(screen, BLACK, (33, 632, 94, 94)) # draw the black centre of the box
+        font = pygame.font.SysFont(None, 50)
+        img = font.render(str(self.points), True, WHITE)
+        screen.blit(img, (70, 663))
 
     def check_collisions(self, player, asteroids, bullets):
         for asteroid in asteroids:
@@ -95,6 +102,7 @@ class InGame(BaseState):
             self.screen.fill(BLACK)
             self.all_sprites.draw(self.screen)
             self.check_collisions(self.player, self.asteroids, self.bullets)
+            self.draw_points_box(self.screen)
 
         
 
