@@ -33,8 +33,10 @@ class InGame(BaseState):
         
         # Other game logic
         self.points = 0
-        
-              
+        self.lives = 3
+        self.heart_img = pygame.image.load(SPRITES + 'heart.png')
+        self.heart_width, self.heart_height = self.heart_img.get_size()
+        self.hearts = [self.heart_img for _ in range(self.lives)]
 
         # Initialize fonts
         self.font = pygame.font.Font(FONT1, 150)
@@ -42,6 +44,11 @@ class InGame(BaseState):
         self.font2 = pygame.font.Font(FONT3, 80)
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
+
+    # draw the hearts 
+    def draw_hearts(self, screen):
+        for i in range(self.lives):
+            screen.blit(self.hearts[i], (10 + i * (self.heart_width + 10), 10))
 
     # drawing the points
     def draw_points_box(self, screen):
@@ -54,7 +61,13 @@ class InGame(BaseState):
     def check_collisions(self, player, asteroids, bullets):
         for asteroid in asteroids:
             if player.rect.colliderect(asteroid.rect):
-                self.game.state_manager.change_state("game_over")
+                if player.invincibility_timer == 0:
+                    self.lives -= 1
+                    player.invincibility_timer = 60
+                    player.colliding = True # set the collisions to true
+                    if self.lives == 0: 
+                        self.game.state_manager.change_state("game_over")
+                break # exit the loop after processing the first collision
         
         # Check for bullet-asteroid collisions
         collisions = pygame.sprite.groupcollide(bullets, asteroids, True, True)
@@ -103,6 +116,7 @@ class InGame(BaseState):
             self.all_sprites.draw(self.screen)
             self.check_collisions(self.player, self.asteroids, self.bullets)
             self.draw_points_box(self.screen)
+            self.draw_hearts(self.screen)
 
         
 

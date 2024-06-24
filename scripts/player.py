@@ -19,6 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.rotation_speed = 5
         self.acceleration = 0.2
         self.friction = 0.99
+        self.colliding = False # collision attribute
+        self.invincibility_timer = 0 # the invincibility timer
 
     def update(self):
         self.velocity *= self.friction
@@ -29,6 +31,10 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
         self.wrap_around_screen()
+
+        # decrease the invincibility timer if active
+        if self.invincibility_timer > 0:
+            self.invincibility_timer -= 1
 
     def wrap_around_screen(self):
         if self.rect.left < 0:
