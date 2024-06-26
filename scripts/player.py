@@ -21,6 +21,8 @@ class Player(pygame.sprite.Sprite):
         self.friction = 0.99
         self.colliding = False # collision attribute
         self.invincibility_timer = 0 # the invincibility timer
+        self.last_shot_time = pygame.time.get_ticks()  # Initialize the last shot time
+        self.shoot_delay = 100  # Set delay to 5 seconds (5000 milliseconds)
 
     def update(self):
         self.velocity *= self.friction
@@ -57,3 +59,10 @@ class Player(pygame.sprite.Sprite):
 
     def decelerate(self):
         self.velocity -= pygame.math.Vector2(self.acceleration, 0).rotate(-self.angle)
+    
+    def can_shoot(self):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_shot_time >= self.shoot_delay:
+            self.last_shot_time = current_time
+            return True
+        return False
