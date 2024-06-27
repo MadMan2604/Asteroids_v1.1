@@ -7,6 +7,7 @@ from states.title_screen_state import TitleScreen
 from states.options_screen_state import OptionsScreen
 from states.instructions_screen_state import InstructionsScreen
 from states.game_over_state import GameOver
+from states.ingame_options_state import InGameOptions
 #from states.loading_screen_state import LoadingScreen
 from scripts.settings import * 
 
@@ -27,6 +28,7 @@ class Game:
         self.state_manager.add_state("options_screen", OptionsScreen(self))
         self.state_manager.add_state("information_screen", InstructionsScreen(self))
         self.state_manager.add_state("game_over", GameOver(self))
+        self.state_manager.add_state("ingame_options", InGameOptions(self))
         self.state_manager.change_state("title_screen")
 
         # Initialise + Define fonts

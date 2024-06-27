@@ -38,6 +38,7 @@ class InGame(BaseState):
         self.spawn_counter_asteroids = 0
         self.spawn_counter_spaceships = 0
         self.paused = False 
+        self.options = False 
         
         # Other game logic
         self.points = 0
@@ -183,6 +184,8 @@ class InGame(BaseState):
                         self.game.state_manager.restart_state("game")
                     if self.options_button.collidepoint(event.pos):
                         print("Options Screen")
+                        self.game.state_manager.change_state("ingame_options")
+                        
                     if self.quit_button.collidepoint(event.pos):
                         pygame.quit()
                         sys.exit()
