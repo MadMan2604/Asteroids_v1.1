@@ -41,7 +41,7 @@ class InGame(BaseState):
         
         # Other game logic
         self.points = 0
-        self.lives = 3
+        self.lives = 5
         self.heart_img = pygame.image.load(SPRITES + 'heart.png')
         self.heart_width, self.heart_height = self.heart_img.get_size()
         self.hearts = [self.heart_img for _ in range(self.lives)]
@@ -52,19 +52,18 @@ class InGame(BaseState):
         self.font2 = pygame.font.Font(FONT3, 80)
         self.font3 = pygame.font.Font(FONT4, 80)
         self.font4 = pygame.font.Font(FONT4, 40)
+        self.font5 = pygame.font.Font(FONT1, 50)
 
     # draw the hearts 
     def draw_hearts(self, screen):
         for i in range(self.lives):
-            screen.blit(self.hearts[i], (10 + i * (self.heart_width + 10), 10))
-
-    # drawing the points
-    def draw_points_box(self, screen):
-        pygame.draw.rect(screen, WHITE, (30, 630, 100, 100)) # draw the white outline for the pointmetre
-        pygame.draw.rect(screen, BLACK, (33, 632, 94, 94)) # draw the black centre of the box
-        font = pygame.font.SysFont(None, 50)
-        img = font.render(str(self.points), True, WHITE)
-        screen.blit(img, (70, 663))
+            screen.blit(self.hearts[i], (10 + i * (self.heart_width + 10), 50))
+    
+    # draw the points metre at the topleft of the screen
+    def draw_points(self, screen):
+        font = pygame.font.SysFont(FONT1, 50)
+        points_txt = font.render(str(self.points), True, WHITE)
+        screen.blit(points_txt, (10, 10))
 
     def check_collisions(self, player, asteroids, bullets, spaceships, enemy_bullets):
         for asteroid in asteroids:
@@ -76,6 +75,7 @@ class InGame(BaseState):
                     if self.lives == 0: 
                         self.game.state_manager.change_state("game_over")
                 break # exit the loop after processing the first collision
+
         for spaceship in spaceships:
             if player.rect.colliderect(spaceship.rect):
                 if player.invincibility_timer == 0:
@@ -88,11 +88,21 @@ class InGame(BaseState):
         
         # Check for bullet-asteroid collisions
         collisions = pygame.sprite.groupcollide(bullets, asteroids, True, True)
-        for bullets, asteroids in collisions.items():
-            if collisions:
-                self.points += 1
+        for bullet, asteroid_list in collisions.items():
+            for asteroid in asteroid_list:
+                if asteroid.size == 'small':
+                    self.points += 100
+                if asteroid.size == 'medium':
+                    self.points += 50
+                if asteroid.size == 'large':
+                    self.points += 20
         
-        
+        # check for bullet-spaceship collisions
+        collisions = pygame.sprite.groupcollide(bullets, spaceships, True, True)
+        for bullet, collided_spaceships in collisions.items():
+            # add logic here
+            print("shot spaceship")
+            self.points += 1000
 
         # Check for enemy bullet collisions with player
         if pygame.sprite.spritecollide(player, enemy_bullets, True):
@@ -101,8 +111,7 @@ class InGame(BaseState):
                     player.invincibility_timer = 60
                     player.colliding = True # set the collisions to true
                     if self.lives == 0: 
-                        self.game.state_manager.change_state("game_over")
-                        
+                        self.game.state_manager.change_state("game_over")                        
 
     def update(self, events):
         # Process input/events
@@ -113,6 +122,7 @@ class InGame(BaseState):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.paused = not self.paused
+
 
         if not self.paused:
             # Update all sprites except spaceships (Enemy)
@@ -128,10 +138,12 @@ class InGame(BaseState):
             # Spawn asteroids
             self.spawn_counter_asteroids += 1 
             if self.spawn_counter_asteroids >= self.spawn_rate_asteroids:
-                asteroid = Asteroid()
+                size = random.choice(['small', 'medium', 'large'])  # Randomly choose a size
+                asteroid = Asteroid(size)
                 self.all_sprites.add(asteroid)
                 self.asteroids.add(asteroid)
                 self.spawn_counter_asteroids = 0
+
             
             # Spawn the Spaceship
             self.spawn_counter_spaceships += 1
@@ -159,10 +171,8 @@ class InGame(BaseState):
             self.screen.fill(BLACK)
             self.all_sprites.draw(self.screen)
             self.check_collisions(self.player, self.asteroids, self.bullets, self.spaceships, self.enemy_bullets)
-            self.draw_points_box(self.screen)
+            self.draw_points(self.screen)
             self.draw_hearts(self.screen)
-
-        
 
         else: 
             for event in events:

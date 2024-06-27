@@ -1,29 +1,53 @@
 import pygame
 import random
 import math
-import os 
+import os
 
 from scripts.settings import *
 
 # THE ASTEROID CLASS THAT GENERATES THE ASTEROIDS 
 class Asteroid(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, size):
         super().__init__()
-        self.asteroid_images = {
-            'a1': SPRITES + 'Asteroid_1.png',
-            'a2': SPRITES + 'Asteroid_2.png',
-            'a3': SPRITES + 'Asteroid_3.png',
-            'a4': SPRITES + 'Asteroid_4.png',
-            'a5': SPRITES + 'Asteroid_5.png',
-            'a6': SPRITES + 'Asteroid_6.png',
-            'a7': SPRITES + 'Asteroid_7.png',
+
+        self.size = size  # 'small', 'medium', 'large'
+        
+        self.small_asteroid_images = {
+            'sa1': SMALL_A_SPRITES + 'Asteroid_1.png',
+            'sa2': SMALL_A_SPRITES + 'Asteroid_2.png',
+            'sa3': SMALL_A_SPRITES + 'Asteroid_3.png',
         }
-        # Select a random asteroid image
-        self.size = 65
+        self.medium_asteroid_images = {
+            'ma1': MEDIUM_A_SPRITES + 'Asteroid_1.png',
+            'ma2': MEDIUM_A_SPRITES + 'Asteroid_2.png',
+            'ma3': MEDIUM_A_SPRITES + 'Asteroid_3.png',
+            'ma4': MEDIUM_A_SPRITES + 'Asteroid_4.png',
+            'ma5': MEDIUM_A_SPRITES + 'Asteroid_5.png',
+        }
+        self.large_asteroid_images = {
+            'la1': LARGE_A_SPRITES + 'Asteroid_1.png',
+            'la2': LARGE_A_SPRITES + 'Asteroid_2.png',
+            'la3': LARGE_A_SPRITES + 'Asteroid_3.png',
+            'la4': LARGE_A_SPRITES + 'Asteroid_4.png',
+            'la5': LARGE_A_SPRITES + 'Asteroid_5.png',
+            'la6': LARGE_A_SPRITES + 'Asteroid_6.png',
+        }
+
+        # Select a random asteroid image based on size
+        if self.size == 'small':
+            self.asteroid_images = self.small_asteroid_images
+            self.size_value = 30  # Fixed size for small asteroids
+        elif self.size == 'medium':
+            self.asteroid_images = self.medium_asteroid_images
+            self.size_value = 60  # Fixed size for medium asteroids
+        elif self.size == 'large':
+            self.asteroid_images = self.large_asteroid_images
+            self.size_value = 120  # Fixed size for large asteroids
+
         image_name = random.choice(list(self.asteroid_images.keys()))
         self.image = pygame.image.load(self.asteroid_images[image_name]).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.size *2, self.size *2))
-   
+        self.image = pygame.transform.scale(self.image, (self.size_value, self.size_value))
+
         self.rect = self.image.get_rect()
         self.rect.x = random.randrange(0, WIDTH)
         self.rect.y = random.randrange(0, HEIGHT)

@@ -26,3 +26,6 @@ GREEN = (0, 255, 0)
 # filepaths
 BACKGROUND_PATH = os.path.join("assets", "images", "background/")
 SPRITES = os.path.join("assets", "sprites/")
+LARGE_A_SPRITES = os.path.join("assets", "sprites", "lasteroids/")
+MEDIUM_A_SPRITES = os.path.join("assets", "sprites", "masteroids/")
+SMALL_A_SPRITES = os.path.join("assets", "sprites", "sasteroids/")
